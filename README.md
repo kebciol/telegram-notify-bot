@@ -20,6 +20,7 @@ Perfect for monitoring alerts, CI/CD notifications, or any automated messaging n
 - ☁️ AWS account with CLI configured
 - 🏗️ [Terraform](https://terraform.io) installed (v1.6+)
 - 📦 Node.js 22+
+- 🪣 S3 bucket for Terraform state (pre-existing)
 
 ## 🚀 Quick Setup
 
@@ -40,6 +41,9 @@ Create `terraform/terraform.tfvars`:
 aws_region = "eu-central-1"
 aws_profile = "your-sso-profile"  # Optional: leave empty for default credentials
 
+# Terraform State Management
+terraform_state_bucket = "your-terraform-state-bucket-name"
+
 # Telegram Configuration  
 telegram_bot_token = "123456789:your_bot_token_here"
 telegram_chat_id = "your_chat_id_here"
@@ -55,7 +59,14 @@ npm install
 
 # Deploy infrastructure
 cd terraform
-terraform init
+
+# Create backend config from your tfvars
+cat > backend.hcl << EOF
+bucket = "$(grep terraform_state_bucket terraform.tfvars | cut -d'"' -f2)"
+region = "$(grep aws_region terraform.tfvars | cut -d'"' -f2)"
+EOF
+
+terraform init -backend-config=backend.hcl
 terraform apply
 ```
 
@@ -100,11 +111,58 @@ Ideal for personal projects and small-scale notifications!
 ```bash
 npm run build    # 📦 Build TypeScript
 npm run dev      # 👀 Watch mode for development
-npm run deploy   # 🚀 Deploy via Terraform
+npm run terraform:deploy   # 🚀 Deploy via Terraform
 
 terraform plan   # 📋 Preview infrastructure changes
 terraform apply  # ✅ Apply changes
 ```
+
+## 🔄 CI/CD with GitHub Actions
+
+This project includes automated deployment via GitHub Actions. To enable it:
+
+### Required GitHub Secrets
+
+Add these to your repository (`Settings` → `Secrets and variables` → `Actions`):
+
+### Required Secrets
+
+#### 🔑 Authentication (choose one method):
+
+**Option A: AWS Access Keys**
+```
+AWS_ACCESS_KEY_ID       # Your AWS access key
+AWS_SECRET_ACCESS_KEY   # Your AWS secret key
+```
+
+**Option B: AWS IAM Role (OIDC - recommended)**
+```
+TERRAFORM_ROLE          # ARN of IAM role for OIDC auth
+```
+
+#### 🏗️ Terraform State
+```
+TERRAFORM_STATE_BUCKET  # S3 bucket name for Terraform state
+```
+
+#### 🤖 Telegram Configuration
+```
+TELEGRAM_BOT_TOKEN      # Your bot token from @BotFather
+TELEGRAM_CHAT_ID        # Your chat ID (number)
+```
+
+#### 🛡️ Security Scanning (optional)
+```
+BEARER_TOKEN           # Bearer API token for security scanning
+```
+
+### 🚀 How it works
+
+- **Security workflow**: Runs on every pull request to scan for vulnerabilities
+- **Deploy workflow**: Runs on push to `master` branch to deploy changes
+- **Dependabot**: Automatically creates PRs for dependency updates
+
+After setup, just push to `master` and your bot will be deployed automatically! 🎉
 
 ## 🗂️ Project Structure
 
